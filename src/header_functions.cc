@@ -25,6 +25,26 @@ Node::Node() : next(nullptr), _data(0) {}
 //	head = nullptr;
 //}
 
+LinkedList::LinkedList() : head(nullptr) {}
+
+LinkedList::~LinkedList()
+{
+	if (head == nullptr)
+		return;
+
+	Node* current = head;
+	Node* next;
+
+	do
+	{
+		next = current->next;
+		delete current;
+		current = next;
+	} while (current != head);
+
+	head = nullptr;
+}
+
 void LinkedList::push_tail(int data)
 {
 	Node* newNode = new Node;
@@ -64,7 +84,7 @@ void LinkedList::push_tail(const LinkedList& other)
 		current = current->next;
 
 	Node* otherCurrent = other.head;
-	while (otherCurrent != other.head)
+	do
 	{
 		Node* newNode = new Node;
 		newNode->_data = otherCurrent->_data;
@@ -75,7 +95,7 @@ void LinkedList::push_tail(const LinkedList& other)
 
 		otherCurrent = otherCurrent->next;
 
-	}
+	} while (otherCurrent != other.head);
 }
 
 void LinkedList::display() const
@@ -87,11 +107,11 @@ void LinkedList::display() const
 
 	Node* current = head;
 
-	while (current->next != head)
+	do
 	{
 		std::cout << current->_data << std::endl;
 		current = current->next;
- 	}
+	} while (current != head);
 }
 
 
