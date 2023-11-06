@@ -69,8 +69,6 @@ void LinkedList::push_tail(int data)
 
 }
 
-
-
 void LinkedList::push_tail(const LinkedList& other)
 {
 	if (other.head == nullptr)
@@ -97,6 +95,8 @@ void LinkedList::push_tail(const LinkedList& other)
 
 	} while (otherCurrent != other.head);
 }
+
+
 
 void LinkedList::display() const
 {
@@ -171,7 +171,24 @@ void LinkedList::push_head(const LinkedList& other)
 
 
 
+void LinkedList::pop_head()
+{
+	if (head == nullptr)
+	{
+		std::runtime_error("the list is empty");
+	}
 
+	Node* current = head;
+	while (current->next != head)
+		current = current->next;
+
+	Node* temp = head;
+	head = head->next;
+	
+	current->next = head;
+
+	delete temp;
+}
 
 
 

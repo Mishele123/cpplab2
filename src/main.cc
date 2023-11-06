@@ -23,5 +23,9 @@ int main()
 	list1.push_head(list2);
 	list1.display();
 
+	list1.pop_head();
+	list1.display();
+
+
 	return 0;
 }
