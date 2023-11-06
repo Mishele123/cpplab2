@@ -27,6 +27,23 @@ Node::Node() : next(nullptr), _data(0) {}
 
 LinkedList::LinkedList() : head(nullptr) {}
 
+LinkedList::LinkedList(const LinkedList& other)
+{
+	if (other.head == nullptr)
+	{
+		head = nullptr;
+		return;
+	}
+	head = nullptr;
+	Node* otherCurrent = other.head;
+	do
+	{
+		push_tail(otherCurrent->_data);
+		otherCurrent = otherCurrent->next;
+	} while (otherCurrent != other.head);
+
+}
+
 LinkedList::~LinkedList()
 {
 	if (head == nullptr)
@@ -49,7 +66,6 @@ void LinkedList::push_tail(int data)
 {
 	Node* newNode = new Node;
 	newNode->_data = data;
-	newNode->next = head;
 
 	if (!head)
 	{
