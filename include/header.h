@@ -20,7 +20,12 @@ public:
 	LinkedList(const LinkedList& other);
 	~LinkedList();
 	LinkedList& operator=(const LinkedList& other);
+
 	void push_tail(int data);
 	void push_tail(const LinkedList& other);
+	
+	void push_head(int data);
+	void push_head(const LinkedList& other);
+	
 	void display() const;
 };

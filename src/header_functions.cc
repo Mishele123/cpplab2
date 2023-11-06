@@ -109,18 +109,34 @@ void LinkedList::display() const
 
 	do
 	{
-		std::cout << current->_data << std::endl;
+		std::cout << current->_data << " ";
 		current = current->next;
 	} while (current != head);
+	std::cout << std::endl;
 }
 
 
 
+void LinkedList::push_head(int data)
+{
+
+	Node* newNode = new Node;
+	newNode->_data = data;
 
 
-
-
-
-
-
-
+	if (head == nullptr)
+	{
+		head = newNode;
+		head->next = head;
+	}
+	else
+	{
+		Node* current = head;
+		while (current->next != head)
+			current = current->next;
+		
+		current->next = newNode;
+		newNode->next = head;
+		head = newNode;
+	}
+}
