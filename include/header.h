@@ -16,6 +16,12 @@ class LinkedList
 {
 	Node* head;
 public:
+
+	Node* get_head()
+	{
+		return head;
+	}
+
 	LinkedList();
 	LinkedList(const LinkedList& other);
 	~LinkedList();
@@ -36,3 +42,5 @@ public:
 	const int& operator[](int index) const;
 	int& operator[](int index);
 };
+
+void print(Node* el); // средний уровень #4

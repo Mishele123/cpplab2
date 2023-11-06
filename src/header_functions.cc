@@ -62,6 +62,15 @@ LinkedList::~LinkedList()
 	head = nullptr;
 }
 
+LinkedList& LinkedList::operator=(const LinkedList& other)
+{
+	if (this == &other)
+		return *this;
+	LinkedList temp(other);
+	std::swap(head, temp.head);
+	return *this;
+}
+
 void LinkedList::push_tail(int data)
 {
 	Node* newNode = new Node;
@@ -300,6 +309,27 @@ const int& LinkedList::operator[](int index) const
 }
 
 
+void print(Node* head)
+{
+	if (head == nullptr)
+		std::cout << std::endl;
 
+	LinkedList reverse;
+	Node* current = head;
+	do
+	{
+		reverse.push_head(current->_data);
+		current = current->next;
+	} while (current != head);
 
+	std::cout << "Инвертированный список: ";
 
+	Node* otherCurrent = reverse.get_head();
+	do
+	{
+		std::cout << otherCurrent->_data << " ";
+		otherCurrent = otherCurrent->next;
+	} while (otherCurrent != reverse.get_head());
+	
+	std::cout << std::endl;
+}
