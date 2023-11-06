@@ -32,5 +32,11 @@ int main()
 	list2.pop_tail();
 	list2.display();
 
+	list1.push_head(4);
+	list1.push_tail(4);
+	list1.display();
+	list1.delete_node(4);
+	list1.display();
+
 	return 0;
 }

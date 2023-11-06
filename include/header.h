@@ -30,5 +30,7 @@ public:
 	void pop_head();
 	void pop_tail();
 
+	void delete_node(int data);
+
 	void display() const;
 };

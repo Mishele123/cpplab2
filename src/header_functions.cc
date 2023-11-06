@@ -213,6 +213,47 @@ void LinkedList::pop_tail()
 }
 
 
+void LinkedList::delete_node(int data)
+{
+	if (head == nullptr)
+		std::runtime_error("the list is empty");
+
+	while (head != nullptr && head->_data == data)
+	{
+		Node* temp = head;
+		Node* current = head;
+		while (current->next != head)
+			current = current->next;
+		current->next = head->next;
+		head = head->next;
+
+		delete temp;
+	}
+
+	Node* current = head;
+	while (current != nullptr && current->next != nullptr)
+	{
+		if (current->next->_data == data)
+		{
+			Node* temp = current->next;
+			current->next = current->next->next;
+			delete temp;
+		}
+		else
+		{
+			current = current->next;
+		}
+
+		if (current == head)
+			break;
+	}
+
+}
+
+
+
+
+
 
 
 
