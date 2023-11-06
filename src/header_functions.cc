@@ -252,12 +252,36 @@ void LinkedList::delete_node(int data)
 
 
 
+int& LinkedList::operator[](int index)
+{
+	Node* current = head;
+	for (int i = 0; i < index; i++)
+	{
+		if (current == nullptr)
+			std::out_of_range("Index out of range");
+		current = current->next;
+	}
+	if (current == nullptr)
+		std::out_of_range("Index out of range");
+
+	return current->_data;
+}
 
 
+const int& LinkedList::operator[](int index) const
+{
+	Node* current = head;
+	for (int i = 0; i < index; i++)
+	{
+		if (current == nullptr)
+			std::out_of_range("Index out of range");
+		current = current->next;
+	}
+	if (current == nullptr)
+		std::out_of_range("Index out of range");
 
-
-
-
+	return current->_data;
+}
 
 
 

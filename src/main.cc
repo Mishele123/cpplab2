@@ -38,5 +38,13 @@ int main()
 	list1.delete_node(4);
 	list1.display();
 
+	std::cout << list1[0] << std::endl;
+	std::cout << list1[1] << std::endl;
+	std::cout << list1[2] << std::endl;
+	std::cout << list1[3] << std::endl;
+	std::cout << list1[4] << std::endl;
+
+	std::cout << list1[0] + list1[2] << std::endl;
+
 	return 0;
 }

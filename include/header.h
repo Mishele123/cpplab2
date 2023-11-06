@@ -31,6 +31,8 @@ public:
 	void pop_tail();
 
 	void delete_node(int data);
-
 	void display() const;
+
+	const int& operator[](int index) const;
+	int& operator[](int index);
 };
