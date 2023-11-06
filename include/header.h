@@ -28,6 +28,7 @@ public:
 	void push_head(const LinkedList& other);
 	
 	void pop_head();
+	void pop_tail();
 
 	void display() const;
 };

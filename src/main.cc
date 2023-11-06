@@ -26,6 +26,11 @@ int main()
 	list1.pop_head();
 	list1.display();
 
+	list1.pop_tail();
+	list1.display();
+
+	list2.pop_tail();
+	list2.display();
 
 	return 0;
 }
