@@ -3,6 +3,8 @@
 #include "header.h"
 
 
+Node::Node() : next(nullptr), _data(0) {}
+
 
 //LinkerdList::LinkerdList(const LinkerdList& other)
 //{
@@ -23,9 +25,9 @@
 //	head = nullptr;
 //}
 
-void LinkerdList::push_tail(int data)
+void LinkedList::push_tail(int data)
 {
-	Node* newNode;
+	Node* newNode = new Node;
 	newNode->_data = data;
 	newNode->next = head;
 
@@ -49,8 +51,48 @@ void LinkerdList::push_tail(int data)
 
 
 
+void LinkedList::push_tail(const LinkedList& other)
+{
+	if (other.head == nullptr)
+		std::runtime_error("the other list is empty");
+	if (head == nullptr)
+		head = other.head;
 
+	Node* current = head;
 
+	while (current->next != head)
+		current = current->next;
+
+	Node* otherCurrent = other.head;
+	while (otherCurrent != other.head)
+	{
+		Node* newNode = new Node;
+		newNode->_data = otherCurrent->_data;
+		newNode->next = head;
+
+		current->next = newNode;
+		current = newNode;
+
+		otherCurrent = otherCurrent->next;
+
+	}
+}
+
+void LinkedList::display() const
+{
+	if (head == nullptr)
+	{
+		std::cout << "Список пуст" << std::endl;
+	}
+
+	Node* current = head;
+
+	while (current->next != head)
+	{
+		std::cout << current->_data << std::endl;
+		current = current->next;
+ 	}
+}
 
 
 

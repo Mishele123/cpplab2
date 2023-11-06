@@ -2,21 +2,25 @@
 
 // Односвязный циклический список
 #include <stdexcept>
-
+#include <iostream>
 
 struct Node
 {
 	Node* next;
 	int _data;
+
+	Node();
 };
 
-class LinkerdList
+class LinkedList
 {
 	Node* head;
-	LinkerdList();
-	LinkerdList(const LinkerdList& other);
-	~LinkerdList();
-	LinkerdList& operator=(const LinkerdList& other);
+public:
+	LinkedList();
+	LinkedList(const LinkedList& other);
+	~LinkedList();
+	LinkedList& operator=(const LinkedList& other);
 	void push_tail(int data);
-	void push_tail(const LinkerdList& other);
+	void push_tail(const LinkedList& other);
+	void display() const;
 };
