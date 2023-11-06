@@ -20,5 +20,8 @@ int main()
 	list1.push_tail(list2);
 	list1.display();
 
+	list1.push_head(list2);
+	list1.display();
+
 	return 0;
 }

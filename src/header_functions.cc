@@ -128,15 +128,61 @@ void LinkedList::push_head(int data)
 	{
 		head = newNode;
 		head->next = head;
+		return;
 	}
-	else
-	{
-		Node* current = head;
-		while (current->next != head)
-			current = current->next;
+
+	Node* current = head;
+	while (current->next != head)
+		current = current->next;
 		
-		current->next = newNode;
-		newNode->next = head;
-		head = newNode;
-	}
+	current->next = newNode;
+	newNode->next = head;
+	head = newNode;
 }
+
+void LinkedList::push_head(const LinkedList& other)
+{
+	if (other.head == nullptr)
+	{
+		std::runtime_error("the other list is empty");
+	}
+
+	if (head == nullptr)
+	{
+		head = other.head;
+		return;
+	}
+
+	Node* otherCurrent = other.head;
+	LinkedList reverse;
+	do
+	{
+		reverse.push_head(otherCurrent->_data);
+		otherCurrent = otherCurrent->next;
+	} while (otherCurrent != other.head);
+
+	Node* current = reverse.head;
+	do
+	{
+		push_head(current->_data);
+		current = current->next;
+	} while (current != reverse.head);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
