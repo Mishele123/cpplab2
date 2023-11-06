@@ -43,4 +43,6 @@ public:
 	int& operator[](int index);
 };
 
-void print(Node* el); // средний уровень #4
+void print(Node* head); // средний уровень #4
+
+int calculate(Node* head, int x); // сложный уровень #1

@@ -312,7 +312,7 @@ const int& LinkedList::operator[](int index) const
 void print(Node* head)
 {
 	if (head == nullptr)
-		std::cout << std::endl;
+		std::runtime_error("the list is empty");
 
 	LinkedList reverse;
 	Node* current = head;
@@ -332,4 +332,38 @@ void print(Node* head)
 	} while (otherCurrent != reverse.get_head());
 	
 	std::cout << std::endl;
+}
+
+int calculate(Node* head, int x)
+{
+	int result = 0;
+
+	if (head == nullptr)
+		std::runtime_error("the list is empty");
+
+	LinkedList reverse;
+	Node* current = head;
+	do
+	{
+		reverse.push_head(current->_data);
+		current = current->next;
+	} while (current != head);
+
+	current = reverse.get_head();
+	int n = 0; // степень
+	do
+	{
+		int num = current->_data;
+		for (int i = 0; i < n; i++)
+		{
+			num *= x;
+		}
+		result += num;
+		n++;
+		current = current->next;
+
+	} while (current != reverse.get_head());
+
+	return result;
+
 }

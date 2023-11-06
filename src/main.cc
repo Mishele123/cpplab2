@@ -53,13 +53,29 @@ int main()
 	list1.delete_node(4);
 	list1.display();
 
-	std::cout << list1[0] << std::endl;
-	std::cout << list1[1] << std::endl;
-	std::cout << list1[2] << std::endl;
-	std::cout << list1[3] << std::endl;
-	std::cout << list1[4] << std::endl;
+	std::cout << list1[0] << " ";
+	std::cout << list1[1] << " ";
+	std::cout << list1[2] << " ";
+	std::cout << list1[3] << " ";
+	std::cout << list1[4] << " ";
+
+	std::cout << std::endl;
 
 	std::cout << list1[0] + list1[2] << std::endl;
+
+
+	LinkedList list4;
+
+	list4.push_tail(2);
+	list4.push_tail(3);
+	list4.push_tail(-4);
+	list4.push_tail(2);
+	list4.push_tail(3);
+
+
+	list4.display();
+
+	std::cout << calculate(list4.get_head(), 2) << std::endl;
 
 	return 0;
 }
