@@ -6,26 +6,20 @@
 Node::Node() : next(nullptr), _data(0) {}
 
 
-//LinkerdList::LinkerdList(const LinkerdList& other)
-//{
-//	if (!other.head)
-//	{
-//		std::runtime_error("the list is empty");
-//	}
-//
-//	Node* oldhead = head;
-//	Node* next = oldhead->next;
-//	while (oldhead)
-//	{
-//		next = oldhead->next;
-//		delete oldhead;
-//		oldhead = next;
-//	}
-//
-//	head = nullptr;
-//}
 
 LinkedList::LinkedList() : head(nullptr) {}
+
+LinkedList::LinkedList(int size) : head(nullptr)
+{
+	srand(time(nullptr));
+	
+
+
+	for (int i = 0; i < size; i++)
+	{
+		push_tail(rand() % 10);
+	}
+}
 
 LinkedList::LinkedList(const LinkedList& other)
 {
@@ -34,6 +28,7 @@ LinkedList::LinkedList(const LinkedList& other)
 		head = nullptr;
 		return;
 	}
+
 	head = nullptr;
 	Node* otherCurrent = other.head;
 	do
@@ -48,16 +43,10 @@ LinkedList::~LinkedList()
 {
 	if (head == nullptr)
 		return;
-
-	Node* current = head;
-	Node* next;
-
-	do
+	while (head != nullptr)
 	{
-		next = current->next;
-		delete current;
-		current = next;
-	} while (current != head);
+		pop_head();
+	}
 
 	head = nullptr;
 }
@@ -76,7 +65,7 @@ void LinkedList::push_tail(int data)
 	Node* newNode = new Node;
 	newNode->_data = data;
 
-	if (!head)
+	if (head == nullptr)
 	{
 		head = newNode;
 		head->next = head;
@@ -91,30 +80,38 @@ void LinkedList::push_tail(int data)
 		current->next = newNode;
 		newNode->next = head;
 	}
-
 }
 
 void LinkedList::push_tail(const LinkedList& other)
 {
 	if (other.head == nullptr)
-		std::runtime_error("the other list is empty");
-	if (head == nullptr)
-		head = other.head;
-
+		throw std::runtime_error("the other list is empty");
+	
 	Node* current = head;
-
-	while (current->next != head)
-		current = current->next;
-
+	if (head != nullptr)
+	{
+		while (current->next != head)
+			current = current->next;
+	}
 	Node* otherCurrent = other.head;
 	do
 	{
 		Node* newNode = new Node;
 		newNode->_data = otherCurrent->_data;
-		newNode->next = head;
+		
+		if (head == nullptr)
+		{
+			head = newNode;
+			head->next = head;
+			current = head;
+		}
+		else
+		{
+			newNode->next = head;
 
-		current->next = newNode;
-		current = newNode;
+			current->next = newNode;
+			current = newNode;
+		}
 
 		otherCurrent = otherCurrent->next;
 
@@ -128,6 +125,7 @@ void LinkedList::display() const
 	if (head == nullptr)
 	{
 		std::cout << "Список пуст" << std::endl;
+		return;
 	}
 
 	Node* current = head;
@@ -169,14 +167,15 @@ void LinkedList::push_head(const LinkedList& other)
 {
 	if (other.head == nullptr)
 	{
-		std::runtime_error("the other list is empty");
+		throw std::runtime_error("the other list is empty");
 	}
 
-	if (head == nullptr)
-	{
-		head = other.head;
-		return;
-	}
+	//if (head == nullptr)
+	//{
+	//	head = other.head; // 3 2 1 -> 1 2 3
+	//	return;
+	//}
+	
 
 	Node* otherCurrent = other.head;
 	LinkedList reverse;
@@ -192,6 +191,7 @@ void LinkedList::push_head(const LinkedList& other)
 		push_head(current->_data);
 		current = current->next;
 	} while (current != reverse.head);
+
 }
 
 
@@ -200,7 +200,14 @@ void LinkedList::pop_head()
 {
 	if (head == nullptr)
 	{
-		std::runtime_error("the list is empty");
+		throw std::runtime_error("the list is empty");
+	}
+
+	if (head->next == head)
+	{
+		delete head;
+		head = nullptr;
+		return;
 	}
 
 	Node* current = head;
@@ -209,17 +216,16 @@ void LinkedList::pop_head()
 
 	Node* temp = head;
 	head = head->next;
-	
 	current->next = head;
-
 	delete temp;
 }
 
 void LinkedList::pop_tail()
 {
 	if (head == nullptr)
-		std::runtime_error("the list is empty");
-	if (head->next == nullptr)
+		throw std::runtime_error("the list is empty");
+
+	if (head->next == head)
 	{
 		delete head;
 		head = nullptr;
@@ -241,9 +247,9 @@ void LinkedList::pop_tail()
 void LinkedList::delete_node(int data)
 {
 	if (head == nullptr)
-		std::runtime_error("the list is empty");
+		throw std::runtime_error("the list is empty");
 
-	while (head != nullptr && head->_data == data)
+	while (head->_data == data)
 	{
 		Node* temp = head;
 		Node* current = head;
@@ -256,7 +262,7 @@ void LinkedList::delete_node(int data)
 	}
 
 	Node* current = head;
-	while (current != nullptr && current->next != nullptr)
+	while (current->next != head)
 	{
 		if (current->next->_data == data)
 		{
@@ -268,7 +274,6 @@ void LinkedList::delete_node(int data)
 		{
 			current = current->next;
 		}
-
 		if (current == head)
 			break;
 	}
@@ -280,14 +285,15 @@ void LinkedList::delete_node(int data)
 int& LinkedList::operator[](int index)
 {
 	Node* current = head;
+
+	if (head == nullptr || size() < index)
+		throw std::out_of_range("Index out of range");
+
+	
 	for (int i = 0; i < index; i++)
 	{
-		if (current == nullptr)
-			std::out_of_range("Index out of range");
 		current = current->next;
 	}
-	if (current == nullptr)
-		std::out_of_range("Index out of range");
 
 	return current->_data;
 }
@@ -295,16 +301,14 @@ int& LinkedList::operator[](int index)
 
 const int& LinkedList::operator[](int index) const
 {
+	if (head == nullptr || size() < index)
+		throw std::out_of_range("Index out of range");
+	
 	Node* current = head;
 	for (int i = 0; i < index; i++)
 	{
-		if (current == nullptr)
-			std::out_of_range("Index out of range");
 		current = current->next;
 	}
-	if (current == nullptr)
-		std::out_of_range("Index out of range");
-
 	return current->_data;
 }
 
@@ -312,7 +316,7 @@ const int& LinkedList::operator[](int index) const
 void print(Node* head)
 {
 	if (head == nullptr)
-		std::runtime_error("the list is empty");
+		throw std::runtime_error("the list is empty");
 
 	LinkedList reverse;
 	Node* current = head;
@@ -334,36 +338,35 @@ void print(Node* head)
 	std::cout << std::endl;
 }
 
-int calculate(Node* head, int x)
+int calculate(const LinkedList& other, int x)
 {
+	if (other.get_head() == nullptr)
+		throw std::runtime_error("the list is empty");
+
+	Node* current = other.get_head();
 	int result = 0;
-
-	if (head == nullptr)
-		std::runtime_error("the list is empty");
-
-	LinkedList reverse;
-	Node* current = head;
-	do
+	int n = other.size();
+	
+	for (int i = n; i >= 0; i--)
 	{
-		reverse.push_head(current->_data);
+		result += current->_data * pow(x, i);
 		current = current->next;
-	} while (current != head);
-
-	current = reverse.get_head();
-	int n = 0; // степень
-	do
-	{
-		int num = current->_data;
-		for (int i = 0; i < n; i++)
-		{
-			num *= x;
-		}
-		result += num;
-		n++;
-		current = current->next;
-
-	} while (current != reverse.get_head());
+	}
 
 	return result;
+}
 
+
+
+int LinkedList::size() const
+{
+	int n = 0;
+
+	Node* temp = head;
+	while (temp->next != head)
+	{
+		n += 1;
+		temp = temp->next;
+	}
+	return n;
 }

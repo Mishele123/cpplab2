@@ -3,6 +3,8 @@
 // Односвязный циклический список
 #include <stdexcept>
 #include <iostream>
+#include <random>
+
 
 struct Node
 {
@@ -17,12 +19,15 @@ class LinkedList
 	Node* head;
 public:
 
-	Node* get_head()
+	int size() const;
+
+	Node* get_head() const
 	{
 		return head;
 	}
 
 	LinkedList();
+	LinkedList(int size);
 	LinkedList(const LinkedList& other);
 	~LinkedList();
 	LinkedList& operator=(const LinkedList& other);
@@ -45,4 +50,4 @@ public:
 
 void print(Node* head); // средний уровень #4
 
-int calculate(Node* head, int x); // сложный уровень #1
+int calculate(const LinkedList& other, int x); // сложный уровень #1
