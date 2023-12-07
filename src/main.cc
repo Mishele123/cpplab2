@@ -19,9 +19,10 @@ int main()
 	list2.push_tail(5);
 	list2.push_head(6);
 
-
+	std::cout << "list1 = ";
 	list1.display();
 	print(list1.get_head());
+	std::cout << "list2 = ";
 	list2.display();
 	std::cout << "list3 = ";
 	list3.display();

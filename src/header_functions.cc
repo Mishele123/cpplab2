@@ -85,7 +85,7 @@ void LinkedList::push_tail(int data)
 void LinkedList::push_tail(const LinkedList& other)
 {
 	if (other.head == nullptr)
-		throw std::runtime_error("the other list is empty");
+		return;
 	
 	Node* current = head;
 	if (head != nullptr)
@@ -167,9 +167,9 @@ void LinkedList::push_head(const LinkedList& other)
 {
 	if (other.head == nullptr)
 	{
-		throw std::runtime_error("the other list is empty");
+		return;
 	}
-
+	
 	//if (head == nullptr)
 	//{
 	//	head = other.head; // 3 2 1 -> 1 2 3
